@@ -3,6 +3,7 @@ package davidmolinari.rssreader;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.w3c.dom.Document;
 
@@ -47,6 +48,17 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
 
     @Override
     protected Void doInBackground(Void... params) {
+        ProcessXml(getData());
+
+        return null;
+    }
+
+    private void ProcessXml(Document data) {
+        if(data!= null) Log.d("Root", data.getDocumentElement().getNodeName());
+    }
+
+
+    public Document getData(){
         //Chargement du xml en background
         try {
             url = new URL(address);
@@ -56,9 +68,10 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = builder.parse(inputstream);
+            return xmlDoc;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }
