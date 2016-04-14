@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        RssRead rssRead = new RssRead(this);
+        rssRead.execute();
     }
 
     @Override

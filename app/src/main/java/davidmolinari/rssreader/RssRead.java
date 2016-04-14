@@ -32,7 +32,7 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
     //Constructeur
     public RssRead(Context context){
         this.context = context;
-        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Chargement, please Meh..");
     }
     @Override
@@ -54,7 +54,9 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
     }
 
     private void ProcessXml(Document data) {
-        if(data!= null) Log.d("Root", data.getDocumentElement().getNodeName());
+        if (data!=null){
+            Log.d("Root",data.getDocumentElement().getNodeName());
+        }
     }
 
 
