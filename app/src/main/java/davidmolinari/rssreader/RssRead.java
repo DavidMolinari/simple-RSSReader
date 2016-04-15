@@ -3,13 +3,15 @@ package davidmolinari.rssreader;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.renderscript.Element;
 import android.util.Log;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -37,13 +39,14 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
     }
     @Override
     protected void onPreExecute() {
-        progressDialog.show();
         super.onPreExecute();
+        progressDialog.show();
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        progressDialog.dismiss();
     }
 
     @Override
@@ -54,10 +57,28 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
     }
 
     private void ProcessXml(Document data) {
-        if (data!=null){
-            Log.d("Root",data.getDocumentElement().getNodeName());
+        if (data != null) {
+            // On stock l'élément root
+            org.w3c.dom.Element root = data.getDocumentElement();
+
+            // On stock channel qui est le premier enfant de Root
+            Node channel=root.getChildNodes().item(1);
+
+
+            NodeList items= channel.getChildNodes();
+            for (int i= 0;i<items.getLength();i++){
+                 Node currentChild = items.item(i);
+            if (currentChild.getNodeName().equalsIgnoreCase("item")){
+                NodeList itemChilds= currentChild.getChildNodes();
+                for (int j = 0;j<itemChilds.getLength();j++){
+                     Node current= itemChilds.item(j);
+                Log.d("mehContent",current.getTextContent());
+            }
         }
     }
+}}
+
+
 
 
     public Document getData(){
