@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.renderscript.Element;
 import android.support.annotation.RequiresPermission;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -54,6 +55,9 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         progressDialog.dismiss();
+        MyAdapter adapter = new MyAdapter(context, feedItems);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
