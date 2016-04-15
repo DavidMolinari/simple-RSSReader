@@ -83,8 +83,11 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
                         item.setPubDate(current.getTextContent());
                     } else if (current.getNodeName().equalsIgnoreCase("link")) {
                         item.setLink(current.getTextContent());
+
                     } else if (current.getNodeName().equalsIgnoreCase("enclosure")) {
-                        item.setEnclosure(current.getTextContent());
+                        // l'URL d'enclosure ( tag Image ) est un attribut. Set to imageLink
+                        String url = current.getAttributes().item(0).getTextContent();
+                        item.setImageLink(url);
                     }
 
                 }
@@ -95,7 +98,7 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
                 Log.d("itemPubDate", item.getPubDate());
                 Log.d("itemLink", item.getLink());
                 Log.d("itemDescription", item.getDescription());
-                Log.d("itemEnclosure", item.getEnclosure());
+                Log.d("itemEnclosure", item.getImageLink());
 
 
             }
