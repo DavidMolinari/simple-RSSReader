@@ -69,11 +69,18 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
             for (int i= 0;i<items.getLength();i++){
                  Node currentChild = items.item(i);
             if (currentChild.getNodeName().equalsIgnoreCase("item")){
+                FeedItem item = new FeedItem();
                 NodeList itemChilds= currentChild.getChildNodes();
                 for (int j = 0;j<itemChilds.getLength();j++){
                      Node current= itemChilds.item(j);
-                Log.d("mehContent",current.getTextContent());
-            }
+                    if (current.getNodeName().equalsIgnoreCase("title")) item.setTitle(current.getTextContent());
+                    if (current.getNodeName().equalsIgnoreCase("description")) item.setDescription(current.getTextContent());
+                    if (current.getNodeName().equalsIgnoreCase("pubDate")) item.setPubDate(current.getTextContent());
+                    if (current.getNodeName().equalsIgnoreCase("link")) item.setLink(current.getTextContent());
+                    if (current.getNodeName().equalsIgnoreCase("enclosure")) item.setEnclosure(current.getTextContent());
+
+
+                }
         }
     }
 }}
