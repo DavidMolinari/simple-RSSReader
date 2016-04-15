@@ -35,6 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.Title.setText(current.getTitle());
         holder.Description.setText(current.getDescription());
         holder.PubDate.setText(current.getPubDate());
+        
     }
 
 
@@ -51,7 +52,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             Title = (TextView) itemView.findViewById(R.id.textTitle);
             Description = (TextView) itemView.findViewById(R.id.textDescription);
             PubDate = (TextView) itemView.findViewById(R.id.textPubDate);
-            Image = (ImageView) itemView.findViewById(R.id.textImageLink);
 
         }
 
