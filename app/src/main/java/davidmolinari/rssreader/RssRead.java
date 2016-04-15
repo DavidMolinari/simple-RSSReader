@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.renderscript.Element;
+import android.support.annotation.RequiresPermission;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import org.w3c.dom.Document;
@@ -24,16 +27,20 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class RssRead extends AsyncTask<Void, Void, Void>{
     // Message à l'utilisateur lors d'un chargement.
     Context context;
-    ProgressDialog progressDialog;
+    String address = "http://www.zdnet.fr/feeds/rss/actualites/";
 
+    ProgressDialog progressDialog;
+    ArrayList<FeedItem> feedItems;
+    RecyclerView recyclerView;
     /**
      * Création d'un string qui contient l'adresse du site à parser. TEST/
      */
-    String address = "http://www.zdnet.fr/feeds/rss/actualites/";
     URL url;
 
+
     //Constructeur
-    public RssRead(Context context){
+    public RssRead(Context context, RecyclerView recyclerView){
+        this.recyclerView = recyclerView;
         this.context = context;
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Chargement, please Meh..");
@@ -48,6 +55,10 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         progressDialog.dismiss();
+        MyAdapter adapter = new MyAdapter(context, feedItems);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.addItemDecoration(new Espace(50));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -61,7 +72,7 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
         if (data != null) {
             // On stock l'élément root
             org.w3c.dom.Element root = data.getDocumentElement();
-            ArrayList<FeedItem> feedItems = new ArrayList<FeedItem>();
+            feedItems = new ArrayList<FeedItem>();
 
             // On stock channel qui est le premier enfant de Root
             Node channel=root.getChildNodes().item(1);
@@ -94,11 +105,11 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
                 feedItems.add(item);
 
                 // Tentative de voir les items dans les logs.
-                Log.d("itemTitle", item.getTitle());
-                Log.d("itemPubDate", item.getPubDate());
-                Log.d("itemLink", item.getLink());
-                Log.d("itemDescription", item.getDescription());
-                Log.d("itemEnclosure", item.getImageLink());
+                //Log.d("itemTitle", item.getTitle());
+               // Log.d("itemPubDate", item.getPubDate());
+               // Log.d("itemLink", item.getLink());
+               // Log.d("itemDescription", item.getDescription());
+               // Log.d("itemEnclosure", item.getImageLink());
 
 
             }
