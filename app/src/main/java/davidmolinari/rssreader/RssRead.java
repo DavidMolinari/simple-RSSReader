@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -60,6 +61,7 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
         if (data != null) {
             // On stock l'élément root
             org.w3c.dom.Element root = data.getDocumentElement();
+            ArrayList<FeedItem> feedItems = new ArrayList<FeedItem>();
 
             // On stock channel qui est le premier enfant de Root
             Node channel=root.getChildNodes().item(1);
@@ -73,15 +75,30 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
                 NodeList itemChilds= currentChild.getChildNodes();
                 for (int j = 0;j<itemChilds.getLength();j++){
                      Node current= itemChilds.item(j);
-                    if (current.getNodeName().equalsIgnoreCase("title")) item.setTitle(current.getTextContent());
-                    if (current.getNodeName().equalsIgnoreCase("description")) item.setDescription(current.getTextContent());
-                    if (current.getNodeName().equalsIgnoreCase("pubDate")) item.setPubDate(current.getTextContent());
-                    if (current.getNodeName().equalsIgnoreCase("link")) item.setLink(current.getTextContent());
-                    if (current.getNodeName().equalsIgnoreCase("enclosure")) item.setEnclosure(current.getTextContent());
-
+                    if (current.getNodeName().equalsIgnoreCase("title")) {
+                        item.setTitle(current.getTextContent());
+                    } else if (current.getNodeName().equalsIgnoreCase("description")) {
+                        item.setDescription(current.getTextContent());
+                    } else if (current.getNodeName().equalsIgnoreCase("pubDate")) {
+                        item.setPubDate(current.getTextContent());
+                    } else if (current.getNodeName().equalsIgnoreCase("link")) {
+                        item.setLink(current.getTextContent());
+                    } else if (current.getNodeName().equalsIgnoreCase("enclosure")) {
+                        item.setEnclosure(current.getTextContent());
+                    }
 
                 }
-        }
+                feedItems.add(item);
+
+                // Tentative de voir les items dans les logs.
+                Log.d("itemTitle", item.getTitle());
+                Log.d("itemPubDate", item.getPubDate());
+                Log.d("itemLink", item.getLink());
+                Log.d("itemDescription", item.getDescription());
+                Log.d("itemEnclosure", item.getEnclosure());
+
+
+            }
     }
 }}
 
