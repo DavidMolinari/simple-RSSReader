@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -35,7 +37,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.Title.setText(current.getTitle());
         holder.Description.setText(current.getDescription());
         holder.PubDate.setText(current.getPubDate());
-        
+        //Ajout de l'image.
+        Picasso.with(context).load(current.getImageLink()).into(holder.Image);
     }
 
 
@@ -52,6 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             Title = (TextView) itemView.findViewById(R.id.textTitle);
             Description = (TextView) itemView.findViewById(R.id.textDescription);
             PubDate = (TextView) itemView.findViewById(R.id.textPubDate);
+            Image= (ImageView) itemView.findViewById(R.id.textImageLink);
 
         }
 

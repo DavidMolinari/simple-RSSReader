@@ -57,6 +57,7 @@ public class RssRead extends AsyncTask<Void, Void, Void>{
         progressDialog.dismiss();
         MyAdapter adapter = new MyAdapter(context, feedItems);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.addItemDecoration(new Espace(50));
         recyclerView.setAdapter(adapter);
     }
 
