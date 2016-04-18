@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,7 +28,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class RssRead extends AsyncTask<Void, Void, Void>{
     // Message à l'utilisateur lors d'un chargement.
     Context context;
-    String address = "http://www.zdnet.fr/feeds/rss/actualites/";
+    //String address = "http://www.zdnet.fr/feeds/rss/actualites/";
+    Random rand = new Random();
+    int  n = rand.nextInt(4) + 0;
+    String[] addresses = {"http://www.zdnet.fr/feeds/rss/actualites/",
+            "http://www.journaldunet.com/rss/",
+            "http://www.01net.com/rss/info/flux-rss/flux-toutes-les-actualites/",
+            "http://www.tech2tech.fr/feed/",
+            "http://www.01net.com/rss/actualites/jeux/"
+    };
+    String address = addresses[n];
 
     ProgressDialog progressDialog;
     ArrayList<FeedItem> feedItems;
